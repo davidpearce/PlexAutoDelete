@@ -87,7 +87,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
         Port="32400"
     if Section=="":
         Section = "1"
-    URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/recentlyViewed")
+    URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section)
     OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck")
     print("----------------------------------------------------------------------------")
     print("                           Detected Settings")
