@@ -1,6 +1,6 @@
-# coding: utf-8
-
 #!/usr/bin/python
+
+# coding: utf-8
 
 import sys, argparse
 ####################################################################################
@@ -20,6 +20,17 @@ import sys, argparse
 ##      - Delete   (1 = Delete  |  Blank = 0 (For Testing or Review))
 ##      - Shows    ( ["Show1","Show2"]; = Kept Shows OR [""]; = DEL ALL SHOWS )
 ##      - OnDeck   ( 1 = Keep If On Deck  |  Blank = Delete Regardless if onDeck  )
+##      - Token    X-Plex-Token value, unique to each PMS setup, and required for Plex Home use.
+##                 Populate variable with own value, see following for instructions on obtaining;
+##                 https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
+##
+####################################################################################
+##
+##   Updated by Mark Kelly, 29/4/2015
+##   - Added OnDeck to arg list
+##   - Added Token arg, to allow script to operate with Plex home
+##   - Removed Host, Port, Section checks under checking URL, as already performed in arg parsing
+##
 ##
 ####################################################################################
 ####################################################################################
@@ -29,7 +40,7 @@ def main(argv):
     global DeleteCount
     global FlaggedCount
     global OnDeckCount
-    global ShowsCount
+    global ShowsCount   
     
     FileCount = 0
     DeleteCount = 0
@@ -44,14 +55,17 @@ def main(argv):
     Delete = ""
     Shows = ""
     OnDeck = ""
+    Token = ""
     
     parser = argparse.ArgumentParser(description="arguments")
     
     parser.add_argument('-t', help='W Windows, L Linux', default="", required=False)
-    parser.add_argument('-i', help='IP Address', default="", required=False)
-    parser.add_argument('-p', help='Port 32400', default="", required=False)
+    parser.add_argument('-i', help='IP Address', default="127.0.0.1", required=False)
+    parser.add_argument('-p', help='Port 32400', default="32400", required=False)
     parser.add_argument('-s', help='Library ID 1,2,3,4', default="1", required=False)
     parser.add_argument('-d', help='1 = Delete, 0 = Test', default="0", required=False)
+    parser.add_argument('-o', help='1 = Keep If OnDeck, 0 = Delete Regardless if OnDeck', default="1", required=False)
+    parser.add_argument('-x', help='X-Plex-Token', default="", required=False)
     
     args = parser.parse_args()
     
@@ -60,11 +74,13 @@ def main(argv):
     Port = args.p
     Section = args.s
     Delete = args.d
+    OnDeck = args.o
+    Token = args.x
 
-    procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck)
+    procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck, Token)
 
 
-def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
+def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck, Token):
     global FileCount
     global DeleteCount
     global FlaggedCount
@@ -81,14 +97,10 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ####################################################################################
     ##  Checking URL
     ####################################################################################
-    if Host=="":
-        Host="127.0.0.1"
-    if Port=="":
-        Port="32400"
-    if Section=="":
-        Section = "1"
-    URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/recentlyViewed")
-    OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck")
+    if Token!="":
+        Token_suffix = "?X-Plex-Token=" + Token    
+    URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/recentlyViewed" + Token_suffix)
+    OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck" + Token_suffix)
     print("----------------------------------------------------------------------------")
     print("                           Detected Settings")
     print("----------------------------------------------------------------------------")
