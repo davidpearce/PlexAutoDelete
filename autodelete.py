@@ -13,13 +13,13 @@ import sys, argparse
 ##   Description: Auto-Delete Watched Items In Plex
 ##
 ##   Required Configurations:
-##      - PC       (Blank = AutoDetect  |  W = Windows  |  L = Linux/Unix/MAC )
-##      - Host     (Hostname or IP  | Blank = 127.0.0.1)
-##      - Port     (Port  |  Blank = 32400)
-##      - Section  (Section aka Library 1 2 3 varies on your system  |  Blank = 1)
-##      - Delete   (1 = Delete  |  Blank = 0 (For Testing or Review))
-##      - Shows    ( ["Show1","Show2"]; = Kept Shows OR [""]; = DEL ALL SHOWS )
-##      - OnDeck   ( 1 = Keep If On Deck  |  Blank = Delete Regardless if onDeck  )
+##      - PC       (Server type - W = Windows | L = Linux | Blank = AutoDetect)
+##      - Host     (IP Address - Blank = 127.0.0.1)
+##      - Port     (Port - Blank = 32400)
+##      - Section  (Section ID - 1,2,3,4 | Blank = 1)
+##      - Delete   (Delete? - 1 = Delete | 0/Blank = Test)
+##      - Shows    (Keep Shows - "Show1" "Show2" | ""/Blank = Delete ALL shows)
+##      - OnDeck   (OnDeck Delete - 1/Blank = Keep if OnDeck | 0 = Delete regardless if OnDeck)
 ##      - Token    X-Plex-Token value, unique to each PMS setup, and required for Plex Home use.
 ##                 Populate variable with own value, see following for instructions on obtaining;
 ##                 https://support.plex.tv/hc/en-us/articles/204059436-Finding-your-account-token-X-Plex-Token
@@ -31,6 +31,9 @@ import sys, argparse
 ##   - Added Token arg, to allow script to operate with Plex home
 ##   - Removed Host, Port, Section checks under checking URL, as already performed in arg parsing
 ##
+##   Update by Mark Kelly, 5/5/15
+##   - Added Shows to arg list - formatting of cli params is slightly different than above, but required to keep inline with argparse usage
+##   - Clarified help text for all args, and pasted to comments above
 ##
 ####################################################################################
 ####################################################################################
@@ -59,12 +62,13 @@ def main(argv):
     
     parser = argparse.ArgumentParser(description="arguments")
     
-    parser.add_argument('-t', help='W Windows, L Linux', default="", required=False)
-    parser.add_argument('-i', help='IP Address', default="127.0.0.1", required=False)
-    parser.add_argument('-p', help='Port 32400', default="32400", required=False)
-    parser.add_argument('-s', help='Library ID 1,2,3,4', default="1", required=False)
-    parser.add_argument('-d', help='1 = Delete, 0 = Test', default="0", required=False)
-    parser.add_argument('-o', help='1 = Keep If OnDeck, 0 = Delete Regardless if OnDeck', default="1", required=False)
+    parser.add_argument('-t', help='Server type - W = Windows | L = Linux | Blank = AutoDetect', default="", required=False)
+    parser.add_argument('-i', help='IP Address - Blank = 127.0.0.1', default="127.0.0.1", required=False)
+    parser.add_argument('-p', help='Port - Blank = 32400', default="32400", required=False)
+    parser.add_argument('-s', help='Section ID - 1,2,3,4 | Blank = 1', default="1", required=False)
+    parser.add_argument('-d', help='Delete? - 1 = Delete | 0/Blank = Test', default="0", required=False)
+    parser.add_argument('-k', help='Keep Shows - "Show1" "Show2" | ""/Blank = Delete ALL shows', nargs='*', default="", required=False)
+    parser.add_argument('-o', help='OnDeck Delete - 1/Blank = Keep if OnDeck | 0 = Delete regardless if OnDeck', default="1", required=False)
     parser.add_argument('-x', help='X-Plex-Token', default="", required=False)
     
     args = parser.parse_args()
@@ -74,6 +78,7 @@ def main(argv):
     Port = args.p
     Section = args.s
     Delete = args.d
+    Shows = args.k
     OnDeck = args.o
     Token = args.x
 
