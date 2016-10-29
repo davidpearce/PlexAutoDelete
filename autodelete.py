@@ -82,7 +82,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ##  Checking URL
     ####################################################################################
     if Host=="":
-        Host="127.0.0.1"
+        Host="htpc"
     if Port=="":
         Port="32400"
     if Section=="":
