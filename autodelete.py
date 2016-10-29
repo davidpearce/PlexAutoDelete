@@ -30,14 +30,13 @@ def main(argv):
     global FlaggedCount
     global OnDeckCount
     global ShowsCount
-    global ServerToken
-    
+        
     FileCount = 0
     DeleteCount = 0
     FlaggedCount = 0
     OnDeckCount = 0
     ShowsCount = 0
-    ServerToken = ""
+    
     
     PC = ""
     Host = ""
@@ -46,7 +45,7 @@ def main(argv):
     Delete = ""
     Shows = ""
     OnDeck = ""
-    
+    ServerToken = ""
     
     parser = argparse.ArgumentParser(description="arguments")
     
@@ -93,7 +92,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     if Section=="":
         Section = "1"
     URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/recentlyViewed" + "?X-Plex-Token=" + ServerToken)
-    OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck" + "?X-Plex-Token=" + ServberToken)
+    OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck" + "?X-Plex-Token=" + ServerToken)
     print("----------------------------------------------------------------------------")
     print("                           Detected Settings")
     print("----------------------------------------------------------------------------")
