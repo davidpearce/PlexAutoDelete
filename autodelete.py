@@ -30,6 +30,7 @@ def main(argv):
     global FlaggedCount
     global OnDeckCount
     global ShowsCount
+    global ServerToken
         
     FileCount = 0
     DeleteCount = 0
