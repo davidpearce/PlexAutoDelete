@@ -44,6 +44,7 @@ def main(argv):
     Delete = ""
     Shows = ""
     OnDeck = ""
+    ServerToken = ""
     
     parser = argparse.ArgumentParser(description="arguments")
     
@@ -52,6 +53,7 @@ def main(argv):
     parser.add_argument('-p', help='Port 32400', default="", required=False)
     parser.add_argument('-s', help='Library ID 1,2,3,4', default="1", required=False)
     parser.add_argument('-d', help='1 = Delete, 0 = Test', default="0", required=False)
+    parser.add_argument('-k', help='Server Token', default="", required=False)
     
     args = parser.parse_args()
     
@@ -60,6 +62,7 @@ def main(argv):
     Port = args.p
     Section = args.s
     Delete = args.d
+    ServerToken = args.k
 
     procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck)
 
@@ -87,8 +90,8 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
         Port="32400"
     if Section=="":
         Section = "1"
-    URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/recentlyViewed")
-    OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck")
+    URL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/recentlyViewed" + "?X-Plex-Token=" + ServerToken)
+    OnDeckURL = ("http://" + Host + ":" + Port + "/library/sections/" + Section + "/onDeck" + "?X-Plex-Token=" + ServberToken)
     print("----------------------------------------------------------------------------")
     print("                           Detected Settings")
     print("----------------------------------------------------------------------------")
