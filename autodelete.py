@@ -30,12 +30,14 @@ def main(argv):
     global FlaggedCount
     global OnDeckCount
     global ShowsCount
+    global ServerToken
     
     FileCount = 0
     DeleteCount = 0
     FlaggedCount = 0
     OnDeckCount = 0
     ShowsCount = 0
+    ServerToken = ""
     
     PC = ""
     Host = ""
@@ -44,7 +46,7 @@ def main(argv):
     Delete = ""
     Shows = ""
     OnDeck = ""
-    ServerToken = ""
+    
     
     parser = argparse.ArgumentParser(description="arguments")
     
