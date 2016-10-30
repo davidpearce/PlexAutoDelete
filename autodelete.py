@@ -55,7 +55,7 @@ def main(argv):
     parser.add_argument('-p', help='Port 32400', default="", required=False)
     parser.add_argument('-s', help='Library ID 1,2,3,4', default="1", required=False)
     parser.add_argument('-d', help='1 = Delete, 0 = Test', default="0", required=False)
-    parser.add_argument('-k', help='Server Token', default="", required=False)
+    parser.add_argument('-k', help='Server Token, will try to read from: ./token', default="", required=False)
     
     args = parser.parse_args()
     
@@ -86,6 +86,9 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ####################################################################################
     ##  Checking URL
     ####################################################################################
+    if ServerToken = "":
+        tokenfile = open('token', 'r')
+        ServerToken = tokenfile.read()
     if Host=="":
         Host="htpc"
     if Port=="":
