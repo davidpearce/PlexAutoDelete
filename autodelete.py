@@ -86,7 +86,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ####################################################################################
     ##  Checking URL
     ####################################################################################
-    if ServerToken = "":
+    if ServerToken == "":
         tokenfile = open('token', 'r')
         ServerToken = tokenfile.read()
     if Host=="":
