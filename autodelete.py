@@ -66,15 +66,16 @@ def main(argv):
     Delete = args.d
     ServerToken = args.k
 
-    procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck)
+    procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck, ServerToken)
 
 
-def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
+def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck, ServerToken):
     global FileCount
     global DeleteCount
     global FlaggedCount
     global OnDeckCount
     global ShowsCount
+    global ServerToken
     ####################################################################################
     ##                        NO NEED TO EDIT BELOW THIS LINE
     ####################################################################################
