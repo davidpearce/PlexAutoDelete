@@ -310,7 +310,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     summaryText = summaryText + "----------------------------------------------------------------------------\n"
     print(summaryText)
     
-    summaryText = "Plex Delete Completed\nDeleted Files:" + str(DeleteCount)"
+    summaryText = "Plex Delete Completed\nDeleted Files: " + str(DeleteCount)
     
     ####################################################################################
     ##  Send Slack Notification
