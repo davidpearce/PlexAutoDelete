@@ -321,6 +321,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
         if gPC=="L":
             print("Operating System: Linux ")
             import urllib2
+            import json
             slackreq = urllib2.Request(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
             jsonText = {'text': summaryText  + DeleteFileList}
@@ -328,6 +329,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
         elif gPC=="W":
             print("Operating System: Windows ")
             import urllib.request
+            import json
             slackreq = urllib.request.urlopen(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
             jsonText = {'text': summaryText  + DeleteFileList}
