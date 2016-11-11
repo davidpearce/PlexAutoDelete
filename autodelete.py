@@ -101,6 +101,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             tokenfile = open('token', 'r')
             ServerToken = tokenfile.read()
             tokenfile.close()
+        else:
             print("Plex Token not defined, exiting.")
             exit()
     if SlackUrl == "":
