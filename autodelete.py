@@ -308,13 +308,14 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             import urllib2
             slackreq = urllib2.Request(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
-            jsonText = {'text': summaryText +}
+            jsonText = {'text': summaryText}
             SlackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
         elif PC=="W":
             print("Operating System: Windows " + AD)
             import urllib.request
             slackreq = urllib.request.urlopen(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
+            jsonText = {'text': summaryText}
             SlackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
 
 if __name__ == "__main__":
