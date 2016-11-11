@@ -33,7 +33,7 @@ def main(argv):
     global ShowsCount
     global ServerToken
     global SlackUrl
-    global PC
+    global gPC
         
     FileCount = 0
     DeleteCount = 0
@@ -43,7 +43,7 @@ def main(argv):
     ShowsCount = 0
     
     
-    PC = ""
+    gPC = ""
     Host = ""
     Port = ""
     Section = ""
@@ -84,7 +84,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     global ShowsCount
     global ServerToken
     global SlackUrl
-    global PC
+    global gPC
     ####################################################################################
     ##                        NO NEED TO EDIT BELOW THIS LINE
     ####################################################################################
@@ -154,14 +154,18 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ##  Checking OS
     ####################################################################################
     AD = ""
+    gPC = PC
     if PC=="":
         AD = "(Auto Detected)"
         if platform.system()=="Windows":
             PC = "W"
+            gPC = PC
         elif platform.system()=="Linux":
             PC = "L"
+            gPC = PC
         elif platform.system()=="Darwin":
             PC = "L"
+            gPC = PC
 
     ####################################################################################
     ##  Setting OS Based Variables
@@ -308,15 +312,15 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ##  Send Slack Notification
     ####################################################################################
     if not SlackUrl:
-        if PC=="L":
-            print("Operating System: Linux " + AD)
+        if gPC=="L":
+            print("Operating System: Linux ")
             import urllib2
             slackreq = urllib2.Request(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
             jsonText = {'text': summaryText  + DeleteFileList}
             slackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
-        elif PC=="W":
-            print("Operating System: Windows " + AD)
+        elif gPC=="W":
+            print("Operating System: Windows ")
             import urllib.request
             slackreq = urllib.request.urlopen(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
