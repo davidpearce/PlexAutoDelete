@@ -77,10 +77,12 @@ def main(argv):
 def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     global FileCount
     global DeleteCount
+    global DeleteFileList
     global FlaggedCount
     global OnDeckCount
     global ShowsCount
     global ServerToken
+    global SlackUrl
     ####################################################################################
     ##                        NO NEED TO EDIT BELOW THIS LINE
     ####################################################################################
