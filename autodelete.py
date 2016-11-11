@@ -320,7 +320,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             slackreq.add_header('Content-Type', 'application/json')
             jsonText = {'text': summaryText  + DeleteFileList}
             slackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
-         else:
+        else:
             print("Operating System: ** Not Configured **  (" + platform.system() + ") is not recognized.")
 
 if __name__ == "__main__":
