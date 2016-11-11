@@ -27,13 +27,17 @@ import sys, argparse
 def main(argv):
     global FileCount
     global DeleteCount
+    global DeleteFileList
     global FlaggedCount
     global OnDeckCount
     global ShowsCount
     global ServerToken
+    global SlackUrl
+    global SlackResponse
         
     FileCount = 0
     DeleteCount = 0
+    DeleteFileList = "\n"
     FlaggedCount = 0
     OnDeckCount = 0
     ShowsCount = 0
@@ -56,6 +60,7 @@ def main(argv):
     parser.add_argument('-s', help='Library ID 1,2,3,4', default="1", required=False)
     parser.add_argument('-d', help='1 = Delete, 0 = Test', default="0", required=False)
     parser.add_argument('-k', help='Server Token, will try to read from: ./token', default="", required=False)
+    parser.add_argument('-u', help='Slack WebHook Url, will try to read from ./slack', default="", required=False)
     
     args = parser.parse_args()
     
@@ -65,9 +70,9 @@ def main(argv):
     Section = args.s
     Delete = args.d
     ServerToken = args.k
+    SlackUrl = args.u
 
     procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck)
-
 
 def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     global FileCount
@@ -90,6 +95,9 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     if ServerToken == "":
         tokenfile = open('token', 'r')
         ServerToken = tokenfile.read()
+    if SlackUrl == "":
+        slackfile = open('slack', 'r')
+        SlackUrl = slackfile.read()
     if Host=="":
         Host="htpc"
     if Port=="":
@@ -247,6 +255,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
         if CantDelete == 0:
             if Delete=="1":
                 print("**[DELETED] " + CheckFile)
+                DeleteFileList = DeleteFileList + "**[DELETED] " + CheckFile + "\n"
                 os.remove(file)
                 DeleteCount += 1
             else:
@@ -260,7 +269,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ####################################################################################
     for VideoNode in doc.getElementsByTagName("Video"):
         view = VideoNode.getAttribute("viewCount")
-        if view == '':
+        if view == '': 
             view = 0
         view = int(view)
         MediaNode = VideoNode.getElementsByTagName("Media")
@@ -277,20 +286,36 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ####################################################################################
     ##  Check Shows And Delete If Configured
     ####################################################################################
-    print("")
-    print("----------------------------------------------------------------------------")
-    print("----------------------------------------------------------------------------")
-    print("                Summary -- Script Completed Successfully")
-    print("----------------------------------------------------------------------------")
-    print("")
-    print("  Total File Count  " + str(FileCount))
-    print("  Kept Show Files   " + str(ShowsCount))
-    print("  On Deck Files     " + str(OnDeckCount))
-    print("  Deleted Files     " + str(DeleteCount))
-    print("  Flagged Files     " + str(FlaggedCount))
-    print("")
-    print("----------------------------------------------------------------------------")
-    print("----------------------------------------------------------------------------")
+    summaryText = ""
+    summaryText = summaryText + "\n\n"
+    summaryText = summaryText + "                Summary -- Script Completed Successfully\n"
+    summaryText = summaryText + "----------------------------------------------------------------------------\n"
+    summaryText = summaryText + "  Total File Count  " + str(FileCount) + "\n"
+    summaryText = summaryText + "  Kept Show Files   " + str(ShowsCount) + "\n"
+    summaryText = summaryText + "  On Deck Files     " + str(OnDeckCount) + "\n"
+    summaryText = summaryText + "  Deleted Files     " + str(DeleteCount) + "\n"
+    summaryText = summaryText + "  Flagged Files     " + str(FlaggedCount) + "\n\n"
+    summaryText = summaryText + "----------------------------------------------------------------------------\n"
+    summaryText = summaryText + DeleteFileList
+    print(summaryText)
+    
+    ####################################################################################
+    ##  Send Slack Notification
+    ####################################################################################
+    if not SlackUrl:
+        if PC=="L":
+            print("Operating System: Linux " + AD)
+            import urllib2
+            slackreq = urllib2.Request(SlackUrl)
+            slackreq.add_header('Content-Type', 'application/json')
+            jsonText = {'text': summaryText +}
+            SlackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
+        elif PC=="W":
+            print("Operating System: Windows " + AD)
+            import urllib.request
+            slackreq = urllib.request.urlopen(SlackUrl)
+            slackreq.add_header('Content-Type', 'application/json')
+            SlackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
 
 if __name__ == "__main__":
     main(sys.argv[1:])
