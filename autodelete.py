@@ -33,6 +33,7 @@ def main(argv):
     global ShowsCount
     global ServerToken
     global SlackUrl
+    global PC
         
     FileCount = 0
     DeleteCount = 0
@@ -83,6 +84,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     global ShowsCount
     global ServerToken
     global SlackUrl
+    global PC
     ####################################################################################
     ##                        NO NEED TO EDIT BELOW THIS LINE
     ####################################################################################
