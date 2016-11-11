@@ -307,6 +307,9 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     summaryText = summaryText + "  Flagged Files     " + str(FlaggedCount) + "\n\n"
     summaryText = summaryText + "----------------------------------------------------------------------------\n"
     print(summaryText)
+    print("debug:::")
+    print(gPC)
+    print(PC)
     
     ####################################################################################
     ##  Send Slack Notification
