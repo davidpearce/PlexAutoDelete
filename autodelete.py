@@ -99,9 +99,11 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     if ServerToken == "":
         tokenfile = open('token', 'r')
         ServerToken = tokenfile.read()
+        tokenfile.close()
     if SlackUrl == "":
         slackfile = open('slack', 'r')
         SlackUrl = slackfile.read()
+        slackfile.close()
     if Host=="":
         Host="htpc"
     if Port=="":
@@ -310,6 +312,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     print("debug:::")
     print(gPC)
     print(PC)
+    print(SlackUrl)
     
     ####################################################################################
     ##  Send Slack Notification
