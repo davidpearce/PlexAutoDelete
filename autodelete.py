@@ -193,6 +193,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     def CheckOnDeck( CheckDeckFile ):
         global FileCount
         global DeleteCount
+        global DeleteFileList
         global FlaggedCount
         global OnDeckCount
         global ShowsCount
@@ -215,6 +216,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     def CheckShows( CheckFile ):
         global FileCount
         global DeleteCount
+        global DeleteFileList
         global FlaggedCount
         global OnDeckCount
         global ShowsCount
