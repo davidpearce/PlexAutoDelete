@@ -317,7 +317,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ####################################################################################
     ##  Send Slack Notification
     ####################################################################################
-    if not SlackUrl:
+    if SlackUrl:
         if gPC=="L":
             print("Operating System: Linux ")
             import urllib2
