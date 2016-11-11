@@ -33,7 +33,6 @@ def main(argv):
     global ShowsCount
     global ServerToken
     global SlackUrl
-    global SlackResponse
         
     FileCount = 0
     DeleteCount = 0
@@ -51,6 +50,7 @@ def main(argv):
     Shows = ""
     OnDeck = ""
     ServerToken = ""
+    SlackUrl = ""
     
     parser = argparse.ArgumentParser(description="arguments")
     
@@ -309,14 +309,14 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             slackreq = urllib2.Request(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
             jsonText = {'text': summaryText}
-            SlackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
+            slackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
         elif PC=="W":
             print("Operating System: Windows " + AD)
             import urllib.request
             slackreq = urllib.request.urlopen(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
             jsonText = {'text': summaryText}
-            SlackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
+            slackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
 
 if __name__ == "__main__":
     main(sys.argv[1:])
