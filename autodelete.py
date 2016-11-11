@@ -300,7 +300,6 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     summaryText = summaryText + "  Deleted Files     " + str(DeleteCount) + "\n"
     summaryText = summaryText + "  Flagged Files     " + str(FlaggedCount) + "\n\n"
     summaryText = summaryText + "----------------------------------------------------------------------------\n"
-    summaryText = summaryText + DeleteFileList
     print(summaryText)
     
     ####################################################################################
@@ -312,15 +311,17 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             import urllib2
             slackreq = urllib2.Request(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
-            jsonText = {'text': summaryText}
+            jsonText = {'text': summaryText  + DeleteFileList}
             slackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
         elif PC=="W":
             print("Operating System: Windows " + AD)
             import urllib.request
             slackreq = urllib.request.urlopen(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
-            jsonText = {'text': summaryText}
+            jsonText = {'text': summaryText  + DeleteFileList}
             slackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
+         else:
+            print("Operating System: ** Not Configured **  (" + platform.system() + ") is not recognized.")
 
 if __name__ == "__main__":
     main(sys.argv[1:])
