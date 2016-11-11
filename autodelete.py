@@ -97,13 +97,15 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     ##  Checking URL
     ####################################################################################
     if ServerToken == "":
-        tokenfile = open('token', 'r')
-        ServerToken = tokenfile.read()
-        tokenfile.close()
+        if os.path.isfile('token'):
+            tokenfile = open('token', 'r')
+            ServerToken = tokenfile.read()
+            tokenfile.close()
     if SlackUrl == "":
-        slackfile = open('slack', 'r')
-        SlackUrl = slackfile.read()
-        slackfile.close()
+        if os.path.isfile('slack'):
+            slackfile = open('slack', 'r')
+            SlackUrl = slackfile.read()
+            slackfile.close()
     if Host=="":
         Host="htpc"
     if Port=="":
