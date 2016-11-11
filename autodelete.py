@@ -309,10 +309,8 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
     summaryText = summaryText + "  Flagged Files     " + str(FlaggedCount) + "\n\n"
     summaryText = summaryText + "----------------------------------------------------------------------------\n"
     print(summaryText)
-    print("debug:::")
-    print(gPC)
-    print(PC)
-    print(SlackUrl)
+    
+    summaryText = "Plex Delete Completed\nDeleted Files:" + str(DeleteCount)"
     
     ####################################################################################
     ##  Send Slack Notification
@@ -324,7 +322,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             import json
             slackreq = urllib2.Request(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
-            jsonText = {'text': summaryText  + DeleteFileList}
+            jsonText = {'text': summaryText  + "\n" +  DeleteFileList}
             slackResponse = urllib2.urlopen(slackreq, json.dumps(jsonText))
         elif gPC=="W":
             print("Operating System: Windows ")
@@ -332,7 +330,7 @@ def procdelete(PC, Host, Port, Section, Delete, Shows, OnDeck):
             import json
             slackreq = urllib.request.urlopen(SlackUrl)
             slackreq.add_header('Content-Type', 'application/json')
-            jsonText = {'text': summaryText  + DeleteFileList}
+            jsonText = {'text': summaryText  + "\n" + DeleteFileList}
             slackResponse = urllib.request.urlopen(slackreq, json.dumps(jsonText))
         else:
             print("Operating System: ** Not Configured **  (" + platform.system() + ") is not recognized.")
